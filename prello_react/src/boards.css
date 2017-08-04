@@ -1,0 +1,102 @@
+body {
+  margin: 0;
+}
+
+.boards header {
+  text-align: center;
+  margin: 0;
+  position: fixed;
+  width: 100%;
+  background-color: rgba(11, 128, 197, 0.9);
+}
+
+.boards .top {
+  display: inline-block;
+}
+
+.boards header button {
+  margin: 20px;
+  height: 30px;
+  padding: .5em;
+  border-radius: 3px;
+  border: 0;
+  color: white;
+}
+
+.boards header #add-board {
+  float: left;
+  background-color: #58A842;
+}
+
+.boards header #logout {
+  float: right;
+  background-color: red;
+}
+
+.boards header h2 {
+  padding: 15px;
+  color: #FDFEFE;
+  margin: 0;
+  font-family: "Brush Script Std", "Brush Script MT", cursive;
+}
+
+.boards section {
+  padding-top: 80px;
+}
+
+.boards section h3 {
+  margin: 0 0 0 15px;
+  font-family: sans-serif;
+}
+
+/*section .create {
+  margin: 10px;
+  text-align: center;
+}*/
+
+.boards section div {
+  display: inline-block;
+  width: 200px;
+  height: 100px;
+  border-radius: 3px;
+  margin: 10px;
+  background-color: #388F50;
+  text-align: left;
+}
+
+.boards .create p {
+  font-family:sans-serif;
+  padding-top: 25px;
+  color: gray;
+  font-size: .8em;
+}
+
+.boards section div p {
+  font-weight: bold;
+  font-family: sans-serif;
+  color: white;
+  padding: 0 10px;
+}
+
+.boards #add-board-menu {
+  position: fixed;
+  display: none;
+  background-color: #58A842;
+  border-radius: 4px;
+  top: 55px;
+  left: 0px;
+  text-align: center;
+}
+
+.boards #add-board-menu input {
+  display: inline-block;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 0;
+}
+
+.boards section {
+    padding-top: 60px;
+    margin-left: 20px;
+}
