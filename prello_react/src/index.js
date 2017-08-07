@@ -4,12 +4,14 @@ import ReactDOM from 'react-dom';
 import Route from './AuthRoute';
 import Login from './views/login';
 import Boards from './views/boards';
+import Board from './views/board';
 
 const Main = () => (
   <main>
     <Switch>
-      <Route exact path='/login' component={Login}/>
-      <Route exact path='/' component={Boards}/>
+      <Route exact path='/login' component={Login} />
+      <Route exact path='/' component={Boards} />
+      <Route exact path='/board/:BOARDID' component={Board} />
     </Switch>
   </main>
 )

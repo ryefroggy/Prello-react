@@ -1,0 +1,670 @@
+.board-page {
+  overflow-x: scroll;
+  white-space: nowrap;
+  margin: 0;
+  background-image: url(http://wallpapercave.com/wp/JJRcAPO.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+.board-page header h2.top {
+  font-family: "Brush Script Std", "Brush Script MT", cursive;
+  margin:0;
+}
+
+.board-page h3 {
+  margin: 10px;
+}
+
+.board-page .card h3 {
+  margin: 0;
+}
+
+.board-page .left {
+  float: left;
+}
+
+.board-page .right {
+  float: right;
+  font-size: .8em;
+}
+
+.board-page #opt-menu {
+  position:absolute;
+  top: 25px;
+  right: 0px;
+  background: white;
+  color:black;
+  width: 300px;
+  padding: 0;
+  text-align: center;
+  display: none;
+}
+
+.board-page #opt-menu li:first-child {
+  color: grey;
+  text-align: center;
+  font-size: .8em;
+  padding: 10px 0;
+}
+
+#opt-menu li {
+  list-style: none;
+}
+
+#opt-menu li button{
+  text-align: left;
+  width: 90%;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+#opt-menu li button:hover {
+  background-color: lightgrey;
+}
+
+#opt-menu .line {
+  background-color: lightgrey;
+  width: 250px;
+  height: 1px;
+  margin-left: 10px;
+}
+
+#menu-open {
+  text-decoration: underline;
+}
+
+#tdiv {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 5px 10px;
+}
+
+#bdiv {
+  margin-left: 10px;
+}
+
+.board-page header {
+  height: 40px;
+  text-align:center;
+  margin: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.board-page button {
+  padding: 5px 10px;
+  margin-right: 10px;
+  border: 0;
+  border-radius: 3px;
+}
+
+.author {
+  background-color: lightgrey;
+  float: right;
+}
+
+#tdiv button {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#tdiv button:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+#bdiv button {
+  margin-top: 2px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#bdiv button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.board-page .top{
+  display: inline-block;
+}
+
+.board-page .bottom {
+  display: inline-block;
+}
+
+.board-page section div {
+  position: fixed;
+  padding-top: 45px;
+}
+
+#lol {
+  margin:0;
+  padding-top: 80px;
+  padding-left: 10px;
+  clear: both;
+}
+
+#lol li {
+  vertical-align: top;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 75%;
+  width: 250px;
+  display: inline-block;
+  background: #e8e8e8;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 10px;
+  font-family: arial;
+  font-size: .8em;
+}
+
+.board-page p {
+  margin: 0;
+}
+
+#lol #final {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#lol #final p {
+  padding-bottom: 10px;
+}
+
+#lol li:first-child {
+  margin-left: 10px;
+}
+
+#lol ul {
+  width: auto;
+  height: auto;
+  padding: 0;
+  white-space: normal;
+}
+
+#lol ul li {
+  margin-top: 5px;
+  margin-left: 0;
+  white-space: normal;
+  width: 230px;
+  background-color: white;
+  padding: 5px;
+  padding-top: 0;
+}
+
+#lol ul li:hover {
+  background-color: #E2E4E6;
+}
+
+#lol ul li p {
+  margin: 0;
+  font-size: 12px;
+  color: black;
+}
+
+#lol ul li:first-child {
+  margin-left: 0;
+}
+
+#lol li .add-card {
+  margin-top: 10px !important;
+  color: grey !important;
+}
+
+.card {
+  width: 600px;
+  height: auto;
+  background-color: #EDEFF0;
+  color: grey;
+  font-family: sans-serif;
+  padding:20px;
+  border-radius: 5px;
+}
+
+.card span {
+  text-decoration: underline;
+  font-size: 12px;
+}
+
+.card p {
+  font-size: 12px;
+}
+
+.card ul {
+  padding: 0;
+  margin: 0;
+}
+
+.card ul .outer {
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.board h4 {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.labels {
+  margin-top: 10px;
+}
+
+#left-list button {
+  font-size: 13px;
+  height: 25px;
+  margin-bottom: 10px;
+  color: white;
+  font-weight: normal;
+}
+
+.list .add {
+  color:darkgrey;
+  font-size: 14px;
+}
+
+.description {
+  padding-top: 10px;
+}
+
+#desc-form {
+  display: none;
+}
+
+#desc {
+  color:black;
+}
+
+#desc-form  textarea{
+  width: 90%;
+  height: 50px;
+  font-family: sans-serif;
+}
+
+#desc-button {
+  margin-top: 5px;
+  border: 0;
+  padding: 10px 15px;
+  color: #555555;
+}
+
+.comments {
+  margin-top: 15px;
+}
+
+.comments textarea {
+  width: 90%;
+  height: 50px;
+  font-family: sans-serif;
+}
+
+.comments form .button {
+  margin-top: 5px;
+  border: 0;
+  padding: 10px 15px;
+  color: #555555;
+}
+
+.card #card-inner {
+  display: block;
+}
+
+#card-left{
+  width: 80%;
+}
+
+.card-right {
+  overflow: hidden;
+  width: 20%;
+}
+
+.baord-page span:hover {
+  color: black;
+}
+
+#card-left .button:hover {
+  background-color: lightgrey;
+}
+
+
+.card .outer .list li{
+  display: inline-block;
+}
+
+#card-head-form {
+  margin-bottom: 3px;
+}
+
+#card-head-form input[type=text] {
+  width: 300px;
+  font-size: 14px;
+}
+
+#card-head-form .button {
+  font-weight: bold;
+  margin-top: 5px;
+  background-color: white;
+  color:grey;
+  border: 0;
+  border-radius: 3px;
+  height: 25px;
+}
+
+.outer button {
+  font-weight: bold;
+  margin-top: 5px;
+  background-color: white;
+  color:grey;
+}
+
+.card-right button:hover {
+  background-color: #298FCA;
+  color:white;
+}
+
+.card-right div:first-child {
+  text-align: center;
+}
+
+.card-right div button:first-child {
+  font-size: 25px;
+  font-family: arial;
+  background-color: #EDEFF0;
+}
+
+.card-right div button:first-child:hover {
+  color:black;
+  background-color: #EDEFF0;
+}
+
+#board-list {
+  text-align: left;
+  background-color: white;
+  padding:10px 5px;
+  list-style: none;
+  top: 30px;
+  left: 0px;
+  position:absolute;
+  display: none;
+}
+
+#board-list button {
+  text-align: left;
+  margin:3px;
+  border-radius: 3px;
+  width: 200px;
+  height: 30px;
+}
+
+#board-list button:hover {
+  background-color:pink;
+}
+
+#menu ul:first-child {
+  text-align: center;
+}
+
+#menu {
+  text-align:left;
+  color: black;
+  font-family: sans-serif;
+  background-color: #EDEFF0;
+  top: 45px;
+  right: -500px;
+  position: absolute;
+  width: 300px;
+}
+
+#menu ul {
+  margin: 20px;
+  padding: 0;
+}
+
+#menu #members {
+    text-align: left;
+    padding-left: 10px;
+}
+
+#menu #menu-top > li{
+  display: inline-block;
+}
+
+#menu #menu-top > li:last-child {
+  float: right;
+  font-family: arial;
+}
+
+.board-page ul, button {
+    display: block;
+}
+
+#close {
+  margin:0;
+}
+
+#menu li {
+  list-style: none;
+}
+
+#options button {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#add-mem {
+  background-color:white;
+  margin: 20px;
+  text-align: left;
+  width: 250px;
+}
+
+#menu #add-mem:hover {
+  background-color: #298FCA;
+}
+
+#menu .member {
+  background-color: lightgrey;
+  width: auto;
+  height: 40px;
+  margin: 10px;
+}
+
+#menu .mem-li {
+    float: left;
+}
+
+#modal {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  position: fixed;
+  display: none;
+  overflow-x: auto;
+}
+
+#modal #modal-bg{
+  background-color: rgba(77, 78, 83, 0.3);
+  width: inherit;
+  height: inherit;
+}
+
+#modal #modal-fg {
+  position:fixed;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 1;
+  top: 10%;
+  left: 25%;
+  width: 50%;
+  max-height: 80vh;
+  overflow-y:auto;
+  overflow-x: hidden;
+}
+
+#card-show {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#list-form .button{
+  background-color: #4BBF6B;
+  color:white;
+  border: 0;
+  border-radius: 3px;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+#list-form .button:hover {
+  background-color: #048e06;
+}
+
+#list-form {
+  display: none;
+}
+
+.delete-list {
+  background-color: red;
+  color: white;
+  float: right;
+  font-size: 10px;
+}
+
+.delete-list:hover {
+  background-color: darkred;
+}
+
+.list-head {
+  display: inline-block;
+}
+
+.green {
+  background-color: green !important;
+}
+
+.pink {
+  background-color: pink !important;
+}
+
+.blue {
+  background-color: blue !important;
+}
+
+.orange {
+  background-color: orange !important;
+}
+
+.red {
+  background-color: red !important;
+}
+
+.yellow {
+  background-color: yellow !important;
+}
+
+.purple {
+  background-color: purple !important;
+}
+
+.violet {
+  background-color: violet !important;
+}
+
+#lol li li .labels {
+  display: inline-block !important;
+}
+
+.label {
+  width: 10px !important;
+  height: 2px !important;
+  display:inline-block !important;
+  margin: 2px !important;
+  padding: 3px !important;
+}
+
+.labels {
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#label-form {
+  text-align: center;
+  background-color: white;
+  width: auto;
+  height: auto;
+  top:32vh;
+  left: 65%;
+  position: fixed;
+  z-index: 2;
+  border-radius: 4px;
+  border: 1px solid grey;
+  display: none;
+}
+
+#label-form input {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#label-form button {
+  width:25vh;
+  height: 5vh;
+  margin: 5px;
+}
+
+#label-form button:hover {
+  filter: brightness(90%);
+}
+
+#left-list {
+  margin-top: 10px;
+}
+
+.card h5 {
+  margin:0;
+  margin-top: 5px;
+}
+
+.card .comment {
+  padding: 10px;
+  margin-top: 7px;
+  margin-left: 5px;
+  width: 80%;
+  background-color: white;
+  border-radius: 4px;
+  color: black;
+  white-space: normal;
+}
+
+.card .date {
+  margin: 2px;
+  margin-left: 5px;
+  font-size: .6em;
+}
+
+#add-mem-form {
+  display: none;
+  margin-left: 25px;
+}
+
+#menu p {
+  font-size: .8em;
+  margin-left: 30px;
+  display: none;
+}
+
+#mem-success {
+  color: green;
+}
+
+#mem-fail {
+  color: red;
+}

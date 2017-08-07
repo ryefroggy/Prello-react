@@ -38,14 +38,9 @@ router.post('/', cors, function(req, res) {
 });
 
 router.get('/:BOARDID', cors,function(req, res) {
-  if(!req.user) {
-    res.redirect('/login');
-  }
-  else {
     Board.findById(req.params.BOARDID,function(err, board) {
-      res.render('index', { title: board.name, path: '../stylesheets/Prello_board.css', js_path: "../javascripts/Prello_board.js", username: req.user.username});
+        res.json(board);
     });
-  }
 });
 
 router.post('/:BOARDID/member', cors,function(req, res) {
@@ -54,7 +49,7 @@ router.post('/:BOARDID/member', cors,function(req, res) {
       res.send({err: "User does not exist."});
     }
     else {
-      Board.findById(req.params.BOARDID, cors,function(err, board) {
+      Board.findById(req.params.BOARDID,function(err, board) {
         board.members.push(req.body.member);
         board.markModified("members");
         board.save(function(err2, updatedboard) {
@@ -80,7 +75,7 @@ router.post('/:BOARDID/list', cors,function(req, res) {
         console.log(err2);
       } else {
         var list = newboard.lists[newboard.lists.length-1];
-        io.getInstance().in(req.params.BOARDID).emit('New List', {"list": list, "user": req.user.username});
+        // io.getInstance().in(req.params.BOARDID).emit('New List', {"list": list, "user": req.user.username});
         res.json(board.lists[board.lists.length-1]);
       }
     });
