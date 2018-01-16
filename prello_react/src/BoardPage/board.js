@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import { connect } from 'react-redux';
+import { getBoards } from '../BoardsPage/actions';
+import { getMembers, addList, getBoard } from './actions';
 import '../board.css';
 
+const boardId = window.location.pathname.substring(7);
+
 class BoardList extends Component {
-    constructor() {
-        super();
-        var t = this;
-        this.state = {
-            PBoards: {},
-            SBoards: {}
-        };
-        $.ajax({
-            url: "http://localhost:3000/board",
-            type: "GET",
-            dataType: "json"
-        })
-            .done(function(json) {
-                t.setState({
-                    PBoards: json.personal,
-                    SBoards: json.shared
-                });
-            });
+    componentWillMount() {
+        this.props.getBoards();
     }
 
     handleClick() {
@@ -31,11 +20,11 @@ class BoardList extends Component {
         const personalChildren = [];
         const sharedChildren = [];
 
-        for(var x in this.state.PBoards) {
-            personalChildren.push(<ListBoard key={x} id={x} name={this.state.PBoards[x]}/>);
+        for(var x in this.props.personalBoards) {
+            personalChildren.push(<ListBoard key={x} id={x} name={this.props.personalBoards[x]}/>);
         }
-        for(var y in this.state.SBoards) {
-            sharedChildren.push(<ListBoard key={y} id={y} name={this.state.PBoards[y]}/>);
+        for(var y in this.props.sharedBoards) {
+            sharedChildren.push(<ListBoard key={y} id={y} name={this.props.sharedBoards[y]}/>);
         }
 
         return(
@@ -134,7 +123,7 @@ class Menu extends Component {
                         <li><h3 id="top">Menu</h3></li>
                         <li><h2 onClick={this.handleClose} id="close">x</h2></li>
                     </ul>
-                    <BoardMembers />
+                    <BoardMembers getMembers={this.props.getMembers} members={this.props.members}/>
                     <ul id="options">
                         <li><button>Change Background</button></li>
                         <li><button>Filter Cards</button></li>
@@ -149,23 +138,26 @@ class Menu extends Component {
 }
 
 class BoardMembers extends Component {
-    constructor() {
-        super();
-        var t = this;
-        $.ajax({
-            url: "http://localhost:3000/board/" + window.location.pathname.substring(7),
-            type: "GET",
-            dataType: "json"
-        })
-            .done(function(json) {
-                console.log(json.members);
-                t.setState({
-                   members: json.members
-                });
-            });
-        this.state= {
-            members: []
-        };
+    // constructor() {
+    //     super();
+    //     var t = this;
+    //     $.ajax({
+    //         url: "http://localhost:3000/board/" + window.location.pathname.substring(7),
+    //         type: "GET",
+    //         dataType: "json"
+    //     })
+    //         .done(function(json) {
+    //             console.log(json.members);
+    //             t.setState({
+    //                members: json.members
+    //             });
+    //         });
+    //     this.state= {
+    //         members: []
+    //     };
+    // }
+    componentWillMount() {
+        this.props.getMembers(boardId);
     }
 
     handleClick() {
@@ -193,7 +185,7 @@ class BoardMembers extends Component {
                 else {
                     $("#mem-success").show();
                 }
-                var temp = t.state.members;
+                var temp = this.props.members;
                 temp.push(username);
                 t.setState({
                     members: temp
@@ -206,8 +198,8 @@ class BoardMembers extends Component {
     render() {
         var memberButtons = [];
 
-        for(let i = 0; i < this.state.members.length; i++) {
-            memberButtons.push(<li className="mem-li" key={i}><button className="member">{this.state.members[i]}</button></li>);
+        for(let i = 0; i < this.props.members.length; i++) {
+            memberButtons.push(<li className="mem-li" key={i}><button className="member">{this.props.members[i]}</button></li>);
         }
 
         return(
@@ -238,17 +230,18 @@ class ListofLists extends Component {
         e.preventDefault();
         var l_name = $("#list-name")[0].value;
         var t = this;
-        $.ajax({
-            url: "http://localhost:3000/board/" + window.location.pathname.substring(7) +"/list/",
-            data: {
-                name: l_name
-            },
-            type: "POST",
-            dataType: "json"
-        })
-        .done(function(json){
-            t.props.addList(json._id, json.name);
-        });
+        // $.ajax({
+        //     url: "http://localhost:3000/board/" + window.location.pathname.substring(7) +"/list/",
+        //     data: {
+        //         name: l_name
+        //     },
+        //     type: "POST",
+        //     dataType: "json"
+        // })
+        // .done(function(json){
+        //     t.props.addList(json._id, json.name);
+        // });
+        this.props.addList(l_name, boardId);
         $("#list-form").hide();
         $("#list-add-p").show();
         $("#list-form")[0].reset();
@@ -301,71 +294,74 @@ class Board extends Component {
                 });
             });
 
-        $.ajax({
-            url: "http://localhost:3000/board/" + window.location.pathname.substring(7),
-            type: "GET",
-            dataType: "json"
-        })
-            .done(function(json) {
-                var data = {};
-                for (let i = 0; i < json.lists.length; i++) {
-                    var list = json.lists[i];
-                    data[list._id] = {name: list.name, cards: {}};
-                    for(let c = 0; c < list.cards.length; c++) {
-                        var card = list.cards[c];
-                        if(card.members[0] === '') {
-                            var members = [];
-                        }
-                        else {
-                            var members = card.members;
-                        }
-                        if (card.comments[0] === '') {
-                            var comments = [];
-                        }
-                        else {
-                            var comments = card.comments;
-                        }
-                        data[list._id].cards[card._id] = { "title" : card.title,
-                                                                "author": card.author,
-                                                                "labels" : {},
-                                                                "members": members,
-                                                                "description" : card.description,
-                                                                "comments" : comments};
-                        for(let x = 0; x < comments.length; x++) {
-                            data[list._id].cards[card._id].comments[x].date = new Date(data[list._id].cards[card._id].comments[x].date);
-                        }
-                        for(let y = 0; y < card.labels.length; y++) {
-                            data[list._id].cards[card._id].labels[card.labels[y]._id] = {"name": card.labels[y].name, "color": card.labels[y].color};
-                        }
-                    }
-                }
-                t.setState({
-                    username: t.state.username,
-                    boardname: json.name,
-                    lists: data
-                });
-            });
+        // $.ajax({
+        //     url: "http://localhost:3000/board/" + window.location.pathname.substring(7),
+        //     type: "GET",
+        //     dataType: "json"
+        // })
+        //     .done(function(json) {
+        //         var data = {};
+        //         for (let i = 0; i < json.lists.length; i++) {
+        //             var list = json.lists[i];
+        //             data[list._id] = {name: list.name, cards: {}};
+        //             for(let c = 0; c < list.cards.length; c++) {
+        //                 var card = list.cards[c];
+        //                 if(card.members[0] === '') {
+        //                     var members = [];
+        //                 }
+        //                 else {
+        //                     var members = card.members;
+        //                 }
+        //                 if (card.comments[0] === '') {
+        //                     var comments = [];
+        //                 }
+        //                 else {
+        //                     var comments = card.comments;
+        //                 }
+        //                 data[list._id].cards[card._id] = { "title" : card.title,
+        //                                                         "author": card.author,
+        //                                                         "labels" : {},
+        //                                                         "members": members,
+        //                                                         "description" : card.description,
+        //                                                         "comments" : comments};
+        //                 for(let x = 0; x < comments.length; x++) {
+        //                     data[list._id].cards[card._id].comments[x].date = new Date(data[list._id].cards[card._id].comments[x].date);
+        //                 }
+        //                 for(let y = 0; y < card.labels.length; y++) {
+        //                     data[list._id].cards[card._id].labels[card.labels[y]._id] = {"name": card.labels[y].name, "color": card.labels[y].color};
+        //                 }
+        //             }
+        //         }
+        //         t.setState({
+        //             username: t.state.username,
+        //             boardname: json.name,
+        //             lists: data
+        //         });
+        //     });
 
         this.state = {
             username: "",
             boardname: "",
-            lists: {}
         };
     }
 
-    addList(id, name) {
-        var data = this.state.lists;
-        data[id] = {name: name, cards: {}};
-        this.setState({
-            username: this.state.username,
-            boardname: this.state.boardname,
-            lists: data
-        });
+    componentWillMount() {
+        this.props.getBoard(boardId);
     }
 
-    addCard(id, name) {
+    // addList(id, name) {
+    //     var data = this.state.lists;
+    //     data[id] = {name: name, cards: {}};
+    //     this.setState({
+    //         username: this.state.username,
+    //         boardname: this.state.boardname,
+    //         lists: data
+    //     });
+    // }
 
-    }
+    // addCard(id, name) {
+
+    // }
 
     static isPrivate = true;
 
@@ -374,17 +370,17 @@ class Board extends Component {
             <div className="board-page">
                 <header>
                     <div id="tdiv">
-                        <BoardList />
+                        <BoardList personalBoards={this.props.personalBoards} sharedBoards={this.props.sharedBoards} getBoards={this.props.getBoards}/>
                         <h2 className="top" id="logo">Prello</h2>
                         <OptMenu username={this.state.username} />
                     </div>
                     <div id="bdiv">
                         <h3 className="bottom left">{this.state.boardname}</h3>
-                        <Menu />
+                        <Menu getMembers={this.props.getMembers} members={this.props.members}/>
                     </div>
                 </header>
 
-                <ListofLists addCard={this.addCard.bind(this)} addList={this.addList.bind(this)} lists={this.state.lists} />
+                <ListofLists addList={this.props.addList} lists={this.props.lists} />
 
                 <div id="modal">
                     <div id="modal-bg" className="modal-close">
@@ -463,4 +459,19 @@ class Board extends Component {
     }
 }
 
-export default Board
+const mapStateToProps = state => ({
+    lists: state.board.lists,
+    members: state.board.members,
+    personalBoards: state.boards.personalBoards,
+    sharedBoards: state.boards.sharedBoards,
+    error: state.board.error
+});
+
+const mapDispatchToProps = dispatch => ({
+    addList: (listName, baordId) => dispatch(addList(listName, boardId)),
+    getBoard: boardId => dispatch(getBoard(boardId)),
+    getBoards: () => dispatch(getBoards()),
+    getMembers: baordId => dispatch(getMembers(boardId))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import $ from 'jquery';
+import { getBoards, addBoard } from './actions';
 import '../boards.css';
 
 class Logout extends Component {
@@ -25,19 +27,21 @@ class Heading extends Component {
     handleSubmit(e) {
         e.preventDefault();
         $("#add-board-menu").hide();
-        var thisProps = this.props;
-        $.ajax({
-            url: "http://localhost:3000/board",
-            data: {
-            name: $("#board-name")[0].value
-            },
-            type: "POST",
-            dataType: "json"
-        })
-            .done(function(json) {
-                $("#add-board-menu")[0].reset();
-                thisProps.AddBoard(json._id, json.name);
-            });
+        const boardName = $('#board-name')[0].value;
+        // var thisProps = this.props;
+        // $.ajax({
+        //     url: "http://localhost:3000/board",
+        //     data: {
+        //     name: $("#board-name")[0].value
+        //     },
+        //     type: "POST",
+        //     dataType: "json"
+        // })
+        //     .done(function(json) {
+        //         $("#add-board-menu")[0].reset();
+        //         thisProps.AddBoard(json._id, json.name);
+        //     });
+        this.props.addBoard(boardName);
     }
 
     handleClick() {
@@ -90,37 +94,41 @@ class Board extends Component {
 }
 
 class Boards extends Component {
-    constructor() {
-        super();
-        var PBoards = {};
-        var SBoards = {};
-        var t = this;
-        $.ajax({
-            url:'http://localhost:3000/board',
-            type: 'GET',
-            dataType: 'json'
-        })
-            .done(function(json) {
-                PBoards = json.personal;
-                SBoards = json.shared;
-                t.setState({
-                    PBoards: json.personal,
-                    SBoards: json.shared
-                });
-            });
-        this.state = {
-            PBoards: PBoards,
-            SBoards: SBoards,
-        };
-    }
+    // constructor() {
+    //     super();
+    //     var PBoards = {};
+    //     var SBoards = {};
+    //     var t = this;
+    //     $.ajax({
+    //         url:'http://localhost:3000/board',
+    //         type: 'GET',
+    //         dataType: 'json'
+    //     })
+    //         .done(function(json) {
+    //             PBoards = json.personal;
+    //             SBoards = json.shared;
+    //             t.setState({
+    //                 PBoards: json.personal,
+    //                 SBoards: json.shared
+    //             });
+    //         });
+    //     this.state = {
+    //         PBoards: PBoards,
+    //         SBoards: SBoards,
+    //     };
+    // }
 
-    AddBoard(id, name) {
-        var temp = this.state.PBoards;
-        temp[id] = name;
-        this.setState({
-            PBoards: temp,
-            SBoards: this.state.SBoards,
-        });
+    // AddBoard(id, name) {
+    //     var temp = this.state.PBoards;
+    //     temp[id] = name;
+    //     this.setState({
+    //         PBoards: temp,
+    //         SBoards: this.state.SBoards,
+    //     });
+    // }
+
+    componentWillMount() {
+        this.props.getBoards();
     }
 
     static isPrivate = true
@@ -129,17 +137,17 @@ class Boards extends Component {
         const personalChildren = [];
         const sharedChildren = [];
 
-        for(var x in this.state.PBoards) {
-            personalChildren.push(<Board key={x} id={x} name={this.state.PBoards[x]}/>);
+        for(const x in this.props.personalBoards) {
+            personalChildren.push(<Board key={x} id={x} name={this.props.personalBoards[x]}/>);
         }
-        for(var y in this.state.SBoards) {
-            sharedChildren.push(<Board key={y} id={y} name={this.state.PBoards[y]}/>);
+        for(const y in this.props.sharedBoards) {
+            sharedChildren.push(<Board key={y} id={y} name={this.props.sharedBoards[y]}/>);
         }
 
         return(
             <div className="boards">
                 <Heading 
-                    AddBoard={this.AddBoard.bind(this)}
+                    addBoard={this.props.addBoard}
                 />
 
                 <Personal>
@@ -153,4 +161,15 @@ class Boards extends Component {
     }
 }
 
-export default Boards
+const mapStateToProps = state => ({
+    personalBoards: state.boards.personalBoards,
+    sharedBoards: state.boards.sharedBoards,
+    error: state.boards.error 
+});
+
+const mapDispatchToProps = dispatch => ({
+    addBoard: boardName => dispatch(addBoard(boardName)),
+    getBoards: () => dispatch(getBoards())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Boards);
